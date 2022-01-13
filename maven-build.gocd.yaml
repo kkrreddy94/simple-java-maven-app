@@ -1,0 +1,33 @@
+format_version: 10
+pipelines:
+  maven-build:
+    group: defaultGroup
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      git-86ab901:
+        git: https://github.com/kkrreddy94/simple-java-maven-app.git
+        username: kkrreddy94
+        shallow_clone: false
+        auto_update: true
+        branch: master
+        encrypted_password: AES:Krj1xSk3IAj4mdTrgJLohQ==:pz1tDI383KVBNncbblxeaQ==
+    stages:
+    - maven-build:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          build:
+            timeout: 0
+            tasks:
+            - exec:
+                arguments:
+                - clean
+                - package
+                command: mvn
+                run_if: passed
